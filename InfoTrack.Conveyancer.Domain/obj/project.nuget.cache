@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "f+GwPiNxN3ZEkWkUJtRAx/6nJzMweU/+COcL9F6qdwrkJJBQNbxxxjb3cO8hAwezXP3KfDP6QhX2fg2Hn/kfLg==",
+  "success": true,
+  "projectFilePath": "/Volumes/Untitled/OFX/Noha-2023/InfoTrack.Conveyancer/InfoTrack.Conveyancer.Domain/InfoTrack.Conveyancer.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/nohabasiony/.nuget/packages/mediatr/12.1.1/mediatr.12.1.1.nupkg.sha512",
+    "/Users/nohabasiony/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/Users/nohabasiony/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
