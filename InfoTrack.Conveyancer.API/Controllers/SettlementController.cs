@@ -1,5 +1,4 @@
 using InfoTrack.Conveyancer.API.Models;
-using InfoTrack.Conveyancer.Domain;
 using InfoTrack.Conveyancer.Domain.Models.Settlements;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +22,6 @@ public class SettlementController : ControllerBase
     [HttpPost(Name = "reservation")]
     public Task<bool> CreateReservation([FromBody] CreateReservationRequest request)
     {
-        return _mediator.Send(new CreateReservationCommand(request.BookingTime, request.Name));
+        return _mediator.Send(new CreateReservationCommand(new TimeOnly(request.BookingTime.Hours, request.BookingTime.Minutes), request.Name));
     }
 }

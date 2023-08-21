@@ -1,4 +1,7 @@
 
+using System.Reflection;
+using FluentValidation;
+using InfoTrack.Conveyancer.API.Middlewares;
 using InfoTrack.Conveyancer.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDateOnlyTimeOnlyStringConverters();
 
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddDomainServices();
+
 
 var app = builder.Build();
 
@@ -23,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<UserExceptionHandlerMiddleware>();
 
 app.UseAuthorization();
 

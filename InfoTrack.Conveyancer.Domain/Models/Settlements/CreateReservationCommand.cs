@@ -1,8 +1,22 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 
 namespace InfoTrack.Conveyancer.Domain.Models.Settlements;
 
-public record CreateReservationCommand(string BookingTime, string Name) : IRequest<bool>;
+public record CreateReservationCommand(TimeOnly BookingTime, string Name) : IRequest<bool>;
+
+public class CreateReservationCommandValidator : AbstractValidator<CreateReservationCommand>
+{
+    public CreateReservationCommandValidator()
+    {
+        RuleFor(x => x.BookingTime)
+            .NotNull()
+            .NotEmpty();
+        RuleFor(x => x.Name)
+            .NotNull()
+            .NotEmpty();
+    }
+}
 
 public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, bool>
 {
