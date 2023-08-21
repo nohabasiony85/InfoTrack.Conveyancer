@@ -1,8 +1,6 @@
-
-using System.Reflection;
-using FluentValidation;
 using InfoTrack.Conveyancer.API.Middlewares;
 using InfoTrack.Conveyancer.Domain;
+using InfoTrack.Conveyancer.Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
+
+builder.Services.AddScoped<ISettlementRepository, SettlementRepository>();
 
 
 builder.Services.AddDomainServices();
