@@ -16,7 +16,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDateOnlyTimeOnlyStringConverters();
 
 
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddDomainServices();
 
 

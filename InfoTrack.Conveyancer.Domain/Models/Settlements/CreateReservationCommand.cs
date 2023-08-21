@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InfoTrack.Conveyancer.Domain.Validators;
 using MediatR;
 
 namespace InfoTrack.Conveyancer.Domain.Models.Settlements;
@@ -11,7 +12,8 @@ public class CreateReservationCommandValidator : AbstractValidator<CreateReserva
     {
         RuleFor(x => x.BookingTime)
             .NotNull()
-            .NotEmpty();
+            .NotEmpty()
+            .SetValidator(new BookingTimeValidator());
         RuleFor(x => x.Name)
             .NotNull()
             .NotEmpty();
@@ -22,6 +24,7 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
 {
     public async Task<bool> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
+        
         return await Task.FromResult(false);
     }
 }

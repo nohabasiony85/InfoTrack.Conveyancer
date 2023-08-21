@@ -1,5 +1,6 @@
 using System.Net;
 using System.Reflection;
+using FluentValidation;
 using InfoTrack.Conveyancer.API.Models;
 using InfoTrack.Conveyancer.Domain.Exceptions;
 using Newtonsoft.Json;
@@ -30,7 +31,8 @@ public class UserExceptionHandlerMiddleware
     {
         HttpStatusCode code = exception switch
         {
-            OutOfTimeException or BadHttpRequestException => HttpStatusCode.NotFound,
+            ValidationException or BadHttpRequestException => HttpStatusCode.BadRequest,
+            OutOfTimeException => HttpStatusCode.NotFound,
             BookingConflictException => HttpStatusCode.Conflict,
             _ => HttpStatusCode.InternalServerError
         };
