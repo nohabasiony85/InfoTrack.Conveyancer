@@ -6,11 +6,11 @@ using MediatR;
 
 namespace InfoTrack.Conveyancer.Domain.Models.Handlers;
 
-public record CreateReservationCommand(BookingTime BookingTime, string Name) : IRequest<Guid>;
+public record CreateBookingCommand(BookingTime BookingTime, string Name) : IRequest<Guid>;
 
-public class CreateReservationCommandValidator : AbstractValidator<CreateReservationCommand>
+public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
 {
-    public CreateReservationCommandValidator()
+    public CreateBookingCommandValidator()
     {
         RuleFor(x => x.BookingTime)
             .NotNull()
@@ -22,16 +22,16 @@ public class CreateReservationCommandValidator : AbstractValidator<CreateReserva
     }
 }
 
-public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, Guid>
+public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, Guid>
 {
     private readonly ISettlementRepository _repository;
 
-    public CreateReservationCommandHandler(ISettlementRepository repository)
+    public CreateBookingCommandHandler(ISettlementRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<Guid> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
         var existingBooking = await _repository.GetSettlementByHour(request.BookingTime.Hour);
         if (existingBooking != null)

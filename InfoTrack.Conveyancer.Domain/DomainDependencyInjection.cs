@@ -16,7 +16,7 @@ public static class DomainDependencyInjection
         services.AddScoped<ISettlementRepository, SettlementRepository>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-        services.AddValidatorsFromAssemblyContaining<CreateReservationCommandValidator>();
+        services.AddValidatorsFromAssemblyContaining<CreateBookingCommandValidator>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddDbContext<ConveyancerDataContext>(

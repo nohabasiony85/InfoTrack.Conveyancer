@@ -22,10 +22,10 @@ public class SettlementApiTests
     }
     
     [Fact]
-    public async Task CreateReservation_WithValidRequest_ReturnSuccessful()
+    public async Task CreateBooking_WithValidRequest_ReturnSuccessful()
     {
         //Arrange
-        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        var content = JsonConvert.SerializeObject(new CreateBookingRequest()
         {
             BookingTime = new BookingTime()
             {
@@ -37,20 +37,20 @@ public class SettlementApiTests
         });
         
         //Act
-        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        var response = await _httpClient.PostAsync("/settlement/booking", new StringContent(content, Encoding.UTF8, "application/json"));
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadAsStringAsync();
-        var createReservationResponse = JsonConvert.DeserializeObject<CreateReservationResponse>(result);
+        var createBookingResponse = JsonConvert.DeserializeObject<CreateBookingResponse>(result);
 
         //Assert
-        Assert.True(createReservationResponse != null && Guid.TryParse(createReservationResponse.Id, out _));
+        Assert.True(createBookingResponse != null && Guid.TryParse(createBookingResponse.Id, out _));
     }
     
     [Fact]
-    public async Task CreateReservation_WithConflictBookingTimeRequest_Return409Conflict()
+    public async Task CreateBooking_WithConflictBookingTimeRequest_Return409Conflict()
     {
         //Arrange
-        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        var content = JsonConvert.SerializeObject(new CreateBookingRequest()
         {
             BookingTime = new BookingTime()
             {
@@ -62,17 +62,17 @@ public class SettlementApiTests
         });
         
         //Act
-        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        var response = await _httpClient.PostAsync("/settlement/booking", new StringContent(content, Encoding.UTF8, "application/json"));
         
         //Assert
         Assert.Equal(HttpStatusCode.Conflict , response.StatusCode);
     }
     
     [Fact]
-    public async Task CreateReservation_WithOutOfHoursBookingTimeRequest_Return400BadRequest()
+    public async Task CreateBooking_WithOutOfHoursBookingTimeRequest_Return400BadRequest()
     {
         //Arrange
-        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        var content = JsonConvert.SerializeObject(new CreateBookingRequest()
         {
             BookingTime = new BookingTime()
             {
@@ -84,7 +84,7 @@ public class SettlementApiTests
         });
         
         //Act
-        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        var response = await _httpClient.PostAsync("/settlement/booking", new StringContent(content, Encoding.UTF8, "application/json"));
         
         //Assert
         Assert.Equal(HttpStatusCode.BadRequest , response.StatusCode);
@@ -92,10 +92,10 @@ public class SettlementApiTests
     
     
     [Fact]
-    public async Task CreateReservation_WithInvalidTimeRequest_Return400BadRequest()
+    public async Task CreateBooking_WithInvalidTimeRequest_Return400BadRequest()
     {
         //Arrange
-        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        var content = JsonConvert.SerializeObject(new CreateBookingRequest()
         {
             BookingTime = new BookingTime()
             {
@@ -107,7 +107,7 @@ public class SettlementApiTests
         });
         
         //Act
-        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        var response = await _httpClient.PostAsync("/settlement/booking", new StringContent(content, Encoding.UTF8, "application/json"));
         
         //Assert
         Assert.Equal(HttpStatusCode.BadRequest , response.StatusCode);

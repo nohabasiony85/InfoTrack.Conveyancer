@@ -17,12 +17,12 @@ public class SettlementController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("reservation")]
-    public async Task<CreateReservationResponse> CreateReservation([FromBody] CreateReservationRequest request)
+    [HttpPost("booking")]
+    public async Task<CreateBookingResponse> CreateBooking([FromBody] CreateBookingRequest request)
     {
-        var id = await _mediator.Send(new CreateReservationCommand(
+        var id = await _mediator.Send(new CreateBookingCommand(
             new BookingTime() { Hour = request.BookingTime.Hour, Minute = request.BookingTime.Minute }, request.Name));
 
-        return new CreateReservationResponse(id.ToString());
+        return new CreateBookingResponse(id.ToString());
     }
 }
