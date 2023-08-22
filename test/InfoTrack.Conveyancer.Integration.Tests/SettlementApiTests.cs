@@ -1,9 +1,10 @@
 using System;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using InfoTrack.Conveyancer.API.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -20,19 +21,72 @@ public class SettlementApiTests
     }
     
     [Fact]
-    public async Task Test1()
+    public async Task CreateReservation_WithValidRequest_ReturnSuccessful()
     {
         //Arrange
         var content = JsonConvert.SerializeObject(new CreateReservationRequest()
         {
+            BookingTime = new BookingTime()
+            {
+                Hours = 12,
+                Minutes = 0,
+            },
+            Name = "Test"
 
         });
-        var response = await _httpClient.PostAsync("/api/settlement/reservation", new StringContent(content));
         
         //Act
+        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadAsStringAsync();
+        var createReservationResponse = JsonConvert.DeserializeObject<CreateReservationResponse>(result);
 
         //Assert
-        Assert.True(!string.IsNullOrEmpty(result));
+        Assert.True(createReservationResponse != null && Guid.TryParse(createReservationResponse.Id, out _));
+    }
+    
+    [Fact]
+    public async Task CreateReservation_WithConflictBookingTimeRequest_Return409Conflict()
+    {
+        //Arrange
+        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        {
+            BookingTime = new BookingTime()
+            {
+                Hours = 09,
+                Minutes = 0,
+            },
+            Name = "Test 2"
+
+        });
+        
+        //Act
+        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        
+        //Assert
+        Assert.Equal(HttpStatusCode.Conflict , response.StatusCode);
+    }
+    
+    
+    [Fact]
+    public async Task CreateReservation_WithOutOfHoursBookingTimeRequest_Return400BadRequest()
+    {
+        //Arrange
+        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        {
+            BookingTime = new BookingTime()
+            {
+                Hours = 19,
+                Minutes = 00,
+            },
+            Name = "Test 3"
+
+        });
+        
+        //Act
+        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        
+        //Assert
+        Assert.Equal(HttpStatusCode.BadRequest , response.StatusCode);
     }
 }

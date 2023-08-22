@@ -22,7 +22,7 @@ public class SettlementController : ControllerBase
         _settlementRepository = settlementRepository;
     }
 
-    [HttpPost(Name = "reservation")]
+    [HttpPost( "reservation")]
     public async Task<CreateReservationResponse> CreateReservation([FromBody] CreateReservationRequest request)
     {
         var id = await _mediator.Send(new CreateReservationCommand(new TimeOnly(request.BookingTime.Hours, request.BookingTime.Minutes), request.Name));
