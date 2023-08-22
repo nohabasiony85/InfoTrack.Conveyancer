@@ -68,7 +68,6 @@ public class SettlementApiTests
         Assert.Equal(HttpStatusCode.Conflict , response.StatusCode);
     }
     
-    
     [Fact]
     public async Task CreateReservation_WithOutOfHoursBookingTimeRequest_Return400BadRequest()
     {
@@ -78,6 +77,29 @@ public class SettlementApiTests
             BookingTime = new BookingTime()
             {
                 Hour = 19,
+                Minute = 00,
+            },
+            Name = "Test 3"
+
+        });
+        
+        //Act
+        var response = await _httpClient.PostAsync("/settlement/reservation", new StringContent(content, Encoding.UTF8, "application/json"));
+        
+        //Assert
+        Assert.Equal(HttpStatusCode.BadRequest , response.StatusCode);
+    }
+    
+    
+    [Fact]
+    public async Task CreateReservation_WithInvalidTimeRequest_Return400BadRequest()
+    {
+        //Arrange
+        var content = JsonConvert.SerializeObject(new CreateReservationRequest()
+        {
+            BookingTime = new BookingTime()
+            {
+                Hour = 190,
                 Minute = 00,
             },
             Name = "Test 3"
