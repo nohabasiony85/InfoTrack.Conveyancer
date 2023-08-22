@@ -11,13 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDateOnlyTimeOnlyStringConverters();
-
 builder.Services.AddScoped<ISettlementRepository, SettlementRepository>();
 
-
 builder.Services.AddDomainServices();
-
 
 var app = builder.Build();
 

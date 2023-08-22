@@ -6,7 +6,7 @@ using MediatR;
 
 namespace InfoTrack.Conveyancer.Domain.Models.Handlers;
 
-public record CreateReservationCommand(TimeOnly BookingTime, string Name) : IRequest<Guid>;
+public record CreateReservationCommand(BookingTime BookingTime, string Name) : IRequest<Guid>;
 
 public class CreateReservationCommandValidator : AbstractValidator<CreateReservationCommand>
 {

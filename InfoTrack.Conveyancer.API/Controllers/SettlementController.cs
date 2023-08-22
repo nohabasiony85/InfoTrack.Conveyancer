@@ -1,6 +1,6 @@
 using InfoTrack.Conveyancer.API.Models;
+using InfoTrack.Conveyancer.Domain.Models;
 using InfoTrack.Conveyancer.Domain.Models.Handlers;
-using InfoTrack.Conveyancer.Domain.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,23 +10,19 @@ namespace InfoTrack.Conveyancer.API.Controllers;
 [Route("[controller]")]
 public class SettlementController : ControllerBase
 {
-
-    private readonly ILogger<SettlementController> _logger;
     private readonly IMediator _mediator;
-    private readonly ISettlementRepository _settlementRepository;
 
-    public SettlementController(ILogger<SettlementController> logger, IMediator mediator,ISettlementRepository settlementRepository)
+    public SettlementController(IMediator mediator)
     {
-        _logger = logger;
         _mediator = mediator;
-        _settlementRepository = settlementRepository;
     }
 
-    [HttpPost( "reservation")]
+    [HttpPost("reservation")]
     public async Task<CreateReservationResponse> CreateReservation([FromBody] CreateReservationRequest request)
     {
-        var id = await _mediator.Send(new CreateReservationCommand(new TimeOnly(request.BookingTime.Hours, request.BookingTime.Minutes), request.Name));
+        var id = await _mediator.Send(new CreateReservationCommand(
+            new BookingTime() { Hour = request.BookingTime.Hour, Minute = request.BookingTime.Minute }, request.Name));
 
-        return  new CreateReservationResponse(id.ToString());
+        return new CreateReservationResponse(id.ToString());
     }
 }

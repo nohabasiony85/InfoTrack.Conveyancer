@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using InfoTrack.Conveyancer.API.Models;
+using InfoTrack.Conveyancer.Domain.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Xunit;
@@ -28,8 +29,8 @@ public class SettlementApiTests
         {
             BookingTime = new BookingTime()
             {
-                Hours = 12,
-                Minutes = 0,
+                Hour = 12,
+                Minute = 0,
             },
             Name = "Test"
 
@@ -53,8 +54,8 @@ public class SettlementApiTests
         {
             BookingTime = new BookingTime()
             {
-                Hours = 09,
-                Minutes = 0,
+                Hour = 09,
+                Minute = 0,
             },
             Name = "Test 2"
 
@@ -76,8 +77,8 @@ public class SettlementApiTests
         {
             BookingTime = new BookingTime()
             {
-                Hours = 19,
-                Minutes = 00,
+                Hour = 19,
+                Minute = 00,
             },
             Name = "Test 3"
 

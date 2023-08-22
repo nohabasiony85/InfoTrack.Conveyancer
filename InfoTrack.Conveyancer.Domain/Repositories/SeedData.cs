@@ -16,19 +16,22 @@ public abstract class SeedData
                     new()
                     {
                         Id = new Guid(),
-                        BookingTime = new TimeOnly(09, 30),
+                        BookingTimeHour = 9,
+                        BookingTimeMinute = 30,
                         Name = "Noha"
                     },
                     new()
                     {
                         Id = new Guid(),
-                        BookingTime = new TimeOnly(10, 00),
+                        BookingTimeHour = 10,
+                        BookingTimeMinute = 00,
                         Name = "Tom"
                     },
                     new()
                     {
                         Id = new Guid(),
-                        BookingTime = new TimeOnly(14, 30),
+                        BookingTimeHour = 14,
+                        BookingTimeMinute = 30,
                         Name = "Bob"
                     },
                 });
