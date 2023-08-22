@@ -18,5 +18,9 @@
     <ItemGroup>
       <ProjectReference Include="..\InfoTrack.Conveyancer.Domain\InfoTrack.Conveyancer.Domain.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="InfoTrack.Conveyancer.Integration.Tests" />
+    </ItemGroup>
 
 </Project>
