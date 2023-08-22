@@ -2,7 +2,7 @@
 
 
 
-### Implementation details
+### Implementation details (Framework, Libraries and architecture)
 - .NET 6
 - xUnit (Integration Tests)
 - Serilog 
@@ -15,5 +15,21 @@
 - Domain Validation (using FluentValidation Library) and exception handling using pipeline behaviour.
 
 
-### Desired Enhancement
-- 
+### How to test the API endpoint?
+- Run `InfoTrack.Conveyancer.API` project
+- You can test it using Swagger Doc (https://localhost:7238/swagger/index.html)
+- Or by import the following cURL to postman or run it via terminal:
+
+```bash
+curl -X 'POST' \
+  'https://localhost:7238/Settlement/booking' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "bookingTime": {
+    "hour": 10,
+    "minute": 30
+  },
+  "name": "Matt"
+}'
+```
